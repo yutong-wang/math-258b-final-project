@@ -1,0 +1,29 @@
+# REQUIRES P_cdd a polytope in cdd format
+# REQUIRES constraint in a list format, for example: a_1 x_1 + a_x x_2 =< b should be given as [b, -a_1, -a_2]
+# RETURNS a new polytope with the constrainted added to the bottom of the list
+def addConstraint(P_cdd, constraint):
+	constraint_str = (''.join(map(lambda x: ' ' + x,map(str, constraint))))+'\n'
+	P_cdd_splitted= P_cdd.split('\n')
+	# print P_cdd_splitted
+	params = P_cdd_splitted[2]
+	params = params.split(' ')[1:]
+	params[0]= str(int(params[0])+1)
+	P_cdd_splitted[2] = ''.join(map(lambda x: ' ' + x,params))
+	P_cdd = '\n'.join(P_cdd_splitted)
+	P_cdd = P_cdd[:-4] + constraint_str + "end\n"
+	# print P_cdd.spsplit('\n')
+	return P_cdd
+
+#REQUIRES a list of lists, e.g. [[1,2,3],[4,5,6],[7,8,9]]
+#RETURNS a list, e.g. [1,2,3,4,5,6,7,8,9]
+def flatten_list(l):
+	return reduce(lambda x,y: x+y, l, [])
+
+# RETURNS the negative fibonnaci sequence
+def fib(n):
+	l = [2,3]
+	for i in range(n-2):
+		l.append(l[i]+l[i+1])
+	return map(lambda x: -x, l)
+
+
